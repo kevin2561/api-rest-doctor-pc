@@ -38,6 +38,17 @@ public class Producto {
     @Column(name = "modelo")
     private String modelo;
 
+    @Column(name = "condicion")
+    private String condicion;
+
+    public String getCondicion() {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion) {
+        this.condicion = condicion;
+    }
+
     @ManyToOne
     @JoinColumn(name = "idCategoria")
     private Categoria categoria;

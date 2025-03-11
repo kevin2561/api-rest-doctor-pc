@@ -57,11 +57,12 @@ public class ProductoController {
             @RequestParam(value = "imagen", required = false) MultipartFile imagen,
             @RequestParam("marca") String marca,
             @RequestParam("modelo") String modelo,
+            @RequestParam("condicion") String condicion,
             @RequestParam("idCategoria") Long idCategoria
 
     ) throws IOException {
 
-        if (productoRepository.existsByNombreAndModeloAndMarca(nombre, modelo, marca)) {
+        if (productoRepository.existsByNombreAndModeloAndMarca(nombre, modelo, marca, condicion)) {
             return ResponseEntity.status(206).body(0);
         }
         Categoria categoria = categoriaRepository.findById(idCategoria)
@@ -74,6 +75,8 @@ public class ProductoController {
         nuevoProducto.setEstado(estado);
         nuevoProducto.setMarca(marca);
         nuevoProducto.setModelo(modelo);
+        nuevoProducto.setCondicion(condicion);
+
         nuevoProducto.setCategoria(categoria);
 
         if (imagen != null && !imagen.isEmpty()) {
@@ -107,12 +110,13 @@ public class ProductoController {
             @RequestParam(value = "imagen", required = false) MultipartFile imagen,
             @RequestParam("marca") String marca,
             @RequestParam("modelo") String modelo,
+            @RequestParam("condicion") String condicion,
             @RequestParam("idCategoria") Long idCategoria) throws IOException {
 
         Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new RuntimeException("Id del producto no encontrado"));
 
-        if (productoRepository.existsByNombreAndModeloAndMarcaAndIdProductoNot(nombre, modelo, marca, idProducto)) {
+        if (productoRepository.existsByNombreAndModeloAndMarcaAndIdProductoNot(nombre, modelo, marca, idProducto, condicion)) {
             return ResponseEntity.status(206)
                     .body(0); // ya exite el producto
         }
@@ -135,6 +139,8 @@ public class ProductoController {
         }
         producto.setMarca(marca);
         producto.setModelo(modelo);
+        producto.setCondicion(condicion);
+
         producto.setCategoria(categoria);
         Producto productoActualizado = productoRepository.save(producto);
         return ResponseEntity.status(200).body(productoActualizado);
