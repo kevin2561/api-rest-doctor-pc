@@ -11,9 +11,13 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     // Validar si ya existe un producto con el mismo nombre, modelo y marca (para
     // CREAR)
 
-    boolean existsByNombreAndModeloAndMarca(String nombre, String modelo, String marca, String condicion);
+    // boolean existsByNombreAndModeloAndMarca(String nombre, String modelo, String marca );
+    boolean existsByNombreAndModeloAndMarcaAndCondicion(String nombre, String modelo, String marca, String condicion);
+
 
     // Validar si ya existe otro producto con el mismo nombre, modelo y marca (para
     // ACTUALIZAR)
-    boolean existsByNombreAndModeloAndMarcaAndIdProductoNot(String nombre, String modelo, String marca, Long idProducto, String condicion);
+    // boolean existsByNombreAndModeloAndMarcaAndIdProductoNot(String nombre, String modelo, String marca, Long idProducto);
+    boolean existsByNombreAndModeloAndMarcaAndCondicionAndIdProductoNot(String nombre, String modelo, String marca, String condicion, Long idProducto);
+
 }

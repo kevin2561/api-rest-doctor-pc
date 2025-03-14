@@ -62,7 +62,7 @@ public class ProductoController {
 
     ) throws IOException {
 
-        if (productoRepository.existsByNombreAndModeloAndMarca(nombre, modelo, marca, condicion)) {
+        if (productoRepository.existsByNombreAndModeloAndMarcaAndCondicion(nombre, modelo, marca, condicion)) {
             return ResponseEntity.status(206).body(0);
         }
         Categoria categoria = categoriaRepository.findById(idCategoria)
@@ -116,7 +116,8 @@ public class ProductoController {
         Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new RuntimeException("Id del producto no encontrado"));
 
-        if (productoRepository.existsByNombreAndModeloAndMarcaAndIdProductoNot(nombre, modelo, marca, idProducto, condicion)) {
+        if (productoRepository.existsByNombreAndModeloAndMarcaAndCondicionAndIdProductoNot(nombre, modelo, marca,
+                condicion, idProducto)) {
             return ResponseEntity.status(206)
                     .body(0); // ya exite el producto
         }
